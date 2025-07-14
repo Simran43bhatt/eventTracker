@@ -1,3 +1,8 @@
 import IORedis from 'ioredis';
 
-export const redisConnection = new IORedis({ maxRetriesPerRequest: null });
+const redisUrl = process.env.REDIS_URL || 'redis://localhost:6379';
+
+export const redisConnection = new IORedis(redisUrl, {
+  maxRetriesPerRequest: null,
+  enableReadyCheck: false, // useful with BullMQ
+});

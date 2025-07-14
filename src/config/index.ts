@@ -11,4 +11,5 @@ export const {
   LOG_DIR,
   ORIGIN,
   DATABASE_URL,
+  REDIS_URL,
 } = process.env;
