@@ -4,7 +4,15 @@
   "description": "This project tracks user actions for analytics",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "npm run build && cross-env node dist/server.js",
+    "dev": "cross-env nodemon",
+    "build": "npm run build:tsc",
+    "build:swc": "swc src -d dist --source-maps --copy-files",
+    "build:tsc": "tsc && tsc-alias",
+    "test": "jest --forceExit --detectOpenHandles",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix",
+    "deploy": "npm run build && pm2 start npm start --name 'event-logger' -- start"
   },
   "keywords": [],
   "author": "Simran Bhatt",
