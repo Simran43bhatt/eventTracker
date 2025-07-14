@@ -1,4 +1,3 @@
-// import { AppName } from '@/types/database.types';
 import { z } from 'zod';
 
 enum AppName {
