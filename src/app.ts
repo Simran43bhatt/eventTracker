@@ -42,14 +42,19 @@ class App {
 
   private initializeMiddlewares() {
     this.app.use(morgan(LOG_FORMAT!, { stream }));
-    // this.app.use(
-    //   cors({
-    //     origin: [
-    //       "*"
-    //     ],
-    //     credentials: true,
-    //   }),
-    // );
+    this.app.use(
+      cors({
+        origin: [
+          "http://localhost:8080",
+          "http://localhost:3000",
+          "http://localhost:3001",
+          "https://my-portfolio-lgo9.vercel.app/" // Add your production frontend domain here
+        ],
+        credentials: true,
+        methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+        allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+      }),
+    );
     this.app.use(hpp());
     this.app.use(helmet());
     this.app.use(compression());
