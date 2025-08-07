@@ -44,12 +44,7 @@ class App {
     this.app.use(morgan(LOG_FORMAT!, { stream }));
     this.app.use(
       cors({
-        origin: [
-          "http://localhost:8080",
-          "http://localhost:3000",
-          "http://localhost:3001",
-          "https://my-portfolio-igwl-git-main-simran-bhatts-projects-8c813b20.vercel.app/" // Add your production frontend domain here
-        ],
+        origin: "*",
         credentials: true,
         methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
         allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
