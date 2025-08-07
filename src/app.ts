@@ -48,7 +48,7 @@ class App {
           "http://localhost:8080",
           "http://localhost:3000",
           "http://localhost:3001",
-          "https://my-portfolio-lgo9.vercel.app/" // Add your production frontend domain here
+          "https://my-portfolio-igwl-git-main-simran-bhatts-projects-8c813b20.vercel.app/" // Add your production frontend domain here
         ],
         credentials: true,
         methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
