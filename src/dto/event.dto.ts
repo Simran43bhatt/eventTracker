@@ -1,8 +1,6 @@
+import { AppName } from '@prisma/client';
 import { z } from 'zod';
 
-enum AppName {
-  WEBSITE = 'website',
-}
 
 export const CreateUserEventDtoSchemaWithUserId = z.object({
   userId: z.string().min(16, 'UserId is required and should be at least 2 characters long'),

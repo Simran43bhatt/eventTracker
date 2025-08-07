@@ -1,17 +1,18 @@
 import {
   CreateAnonymousUserEventDtoSchema,
   CreateUserEventDtoSchema,
+  LoginUserEventDtoPhoneSchema,
   LoginUserEventDtoSchema,
   LoginUserEventDtoWithUserIdSchema
 } from '@/dto/event.dto';
 import { eventQueue } from '@/queues';
+import { eventService } from '@/services/index.service';
 import { logger } from '@/utils/logger';
 import { validate } from '@/utils/vaildateZodSchema';
 import { createId } from '@paralleldrive/cuid2';
 import { NextFunction, Request, Response } from 'express';
 
 class EventController {
-  private eventQueue = eventQueue;
 
   createEvent = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -29,7 +30,7 @@ class EventController {
 
       const dataToCreateEvent = { ...validData, ...(eventForAnonymous.success ? eventForAnonymous.data : {}) };
 
-      this.eventQueue.add('create-event', dataToCreateEvent, {
+      eventQueue.add('create-event', dataToCreateEvent, {
         attempts: 10,
         backoff: {
           type: 'exponential',
@@ -51,7 +52,14 @@ class EventController {
 
       const eventForUserId = LoginUserEventDtoWithUserIdSchema.safeParse(validData);
       if (eventForUserId.success) {
-        // const events = await eventService.loginEventWithUserId(eventForUserId.data);
+        const events = await eventService.loginEventWithUserId(eventForUserId.data);
+        res.status(200).json({ message: 'Events updated', data: {} });
+        return;
+      }
+
+      const eventForPhone = LoginUserEventDtoPhoneSchema.safeParse(validData);
+      if (eventForPhone.success) {
+        const events = await eventService.loginEventWithPhone(eventForPhone.data);
         res.status(200).json({ message: 'Events updated', data: {} });
         return;
       }
